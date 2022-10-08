@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@2.1.0/build/pure-min.css" integrity="sha384-yHIFVG6ClnONEA5yB5DJXfW2/KC173DIQrYoZMEtBvGzmf0PKiGyNEqe9N6BNDBH" crossorigin="anonymous">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css">
+
+    <title>The News</title>
+</head>
+<body style="background-color: #ADE1F5">
+
+<div>
+    <h1 style="text-align:center">Latest Tech News</h1>
+
+  <div class="parent">
+    <div class="child">
+
+    <div>
+        <form class="pure-form" method="post" action="{{ url_for('filter_text') }}">
+            <fieldset>
+                <input type="text" placeholder="Filter by text" id="text"
+                       name="text" class="pure-input-rounded"/>
+                <br>
+                <br>
+                <button type="submit" class="pure-button pure-button-primary">Search
+                </button>
+            </fieldset>
+        </form>
+    </div>
+    <div class="pure-menu pure-menu-horizontal">
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+                <a id="menuLink1" class="pure-menu-link">Filter by type</a>
+                <ul class="pure-menu-children pure-menu-horizontal">
+                    <li class="pure-menu-item">
+                        <a href="{{ url_for('filter_type', type='job') }}" class="pure-menu-link">Job</a>
+                    </li>
+                    <li class="pure-menu-item">
+                        <a href="{{ url_for('filter_type', type='story') }}" class="pure-menu-link">Story</a>
+                    </li>
+                    <li class="pure-menu-item">
+                        <a href="{{ url_for('filter_type', type='comment') }}" class="pure-menu-link">Comment</a>
+                    </li>
+                    <li class="pure-menu-item">
+                        <a href="{{ url_for('filter_type', type='poll') }}" class="pure-menu-link">Poll</a>
+                    </li>
+                    <li class="pure-menu-item">
+                        <a href="{{ url_for('filter_type', type='pollopt') }}" class="pure-menu-link">Pollopt</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    </div>
+     <div>
+        <form class="pure-form child" method="post" action="{{ url_for('view_latest_news') }}">
+            <fieldset>
+                <legend>Post your own news!</legend>
+                <div>
+                <input type="number" placeholder="ID" name="id" id="id"/>
+                <input type="text" placeholder="Title" name="title" id="title"/>
+                <input type="text" placeholder="Writen by" name="by" id="by"/>
+                <input type="text" placeholder="Url" name="url" id="url"/>
+                </div>
+                <br>
+                <div>
+                <label> Type:
+                    <input type="radio" id="type" value="job" name="type"/>
+                    <label for="job">Job</label>
+                    <input type="radio" id="story" value="story" name="type"/>
+                    <label for="story">Story</label>
+                    <input type="radio" id="comment" value="comment" name="type"/>
+                    <label for="comment">Comment</label>
+                    <input type="radio" id="poll" value="poll" name="type"/>
+                    <label for="poll">Poll</label>
+                    <input type="radio" id="pollopt" value="pollopt" name="type"/>
+                    <label for="pollopt">Pollopt</label>
+                </label>
+                </div>
+                <br>
+                <div>
+                <textarea name="text"
+                  placeholder="Your Comment"
+                  rows="5"
+                  cols="30"
+                  class="pure-input-rounded"
+                ></textarea>
+                <button type="submit" class="pure-button pure-button-primary">Create</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+
+  </div>
+    {% for item in items %}
+    <div style="background-color: #EDEDED">
+        <h3><a href="{{ url_for('each_news', id=item.id) }}">{{item.title}}</a></h3>
+        <p> written by {{item.by}}</p>
+        <br>
+    </div>
+    {% endfor %}
+</div>
+
+</body>
+</html>
